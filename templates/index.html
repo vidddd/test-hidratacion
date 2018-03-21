@@ -1,0 +1,59 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Web Cam </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <center><h3>Pon el dedo en la camara</h3></center>
+        <!--
+	         Ideally these elements aren't created until it's confirmed that the
+	         client supports video/camera, but for the sake of illustrating the
+	          elements involved, they are created with markup (not JavaScript)
+        -->
+        <div id="comenzard">
+            <button id="comenzar">Comenzar</button>
+        </div>
+        <div id="pres">0</div>
+        <div id="webcam" style="display:none;">
+
+          <video id="video" width="480" height="480" autoplay></video>
+          <canvas id="canvas" width="480" height="480"></canvas>
+          <div id="test"></div>
+        </div>
+        <div id="result" style="display:none;">
+            <h2>La hidratacion de tu piel es</h2>
+            <h3 class="hidra"></h3>
+            <button id="ganado">¿Has ganado?</button>
+        </div>
+        <div id="ooooh" style="display:none;">
+          <h4>OOOOOOH</h4>
+          <p>Lo sentimos no te ha tocado el premio</p>
+        </div>
+        <div id="formpremio" style="display:none;">
+
+          <h5 class="premioo">form premio</h5>
+          <form method="post" name="form1" action="index.php" onsubmit="return validate();">
+
+              <input type="text" name="uniid" id="uniid" value="" />
+              <label for="nombre">Nombre</label><input type="text" name="nombre" id="nombre" value="" />
+              <label for="apellidos">Apellidos</label><input type="text" name="apellidos" id="apellidos" value="" />
+              <label for="apellidos">Direccion</label><input type="text" name="direccion" id="direccion" value="" />
+              <label for="apellidos">Cp</label><input type="text" name="cp" id="cp" value="" />
+              <label for="apellidos">Poblacion</label><input type="text" name="poblacion" id="poblacion" value="" />
+              <label for="apellidos">Provincia</label><input type="text" name="provincia" id="provincia" value="" />
+              <label for="apellidos">Dni</label><input type="text" name="dni" id="dni" value="" />
+              <label for="apellidos">Edad</label><input type="text" name="edad" id="edad" value="" />
+              <label for="apellidos">Email</label><input type="text" name="email" id="email" value="" />
+              <label for="apellidos">Telefono</label><input type="text" name="telefono" id="telefono" value="" />
+                <input type="submit" value="Guardar" />
+          </form>
+        </div>
+        <script src="js/libs/jquery.js" type="text/javascript"></script>
+        <script src="js/main.js" type="text/javascript"></script>
+    </body>
+</html>

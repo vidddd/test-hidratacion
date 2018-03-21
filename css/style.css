@@ -1,0 +1,14 @@
+
+/*
+#video, #canvas {
+ height: 0;
+ overflow: hidden; position: absolute;
+}
+*/
+#webcam {
+/*  height: 0; */
+  overflow: hidden; position: absolute;
+  z-index: 10;
+
+  opacity:0;
+}

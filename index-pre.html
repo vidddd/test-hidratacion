@@ -1,0 +1,101 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>TEST HIDRATACION</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
+    <body>
+        <center><h3>Pon el dedo en la camara</h3></center>
+        <!--
+	         Ideally these elements aren't created until it's confirmed that the
+	         client supports video/camera, but for the sake of illustrating the
+	          elements involved, they are created with markup (not JavaScript)
+        -->
+        <div id="pres"></div>
+        <video id="video" width="480" height="480" autoplay></video>
+        <canvas id="canvas" width="480" height="480" style="border:1px solid #000;"></canvas>
+
+       <div id="test"></div>
+        <script>
+
+    // Put event listeners into place
+    window.addEventListener("DOMContentLoaded", function() {
+            // Grab elements, create settings, etc.
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        var video = document.getElementById('video');
+        var muestras = []; // array de muestras
+        var mediaConfig =  { video: true };
+        var isWebcam = false;
+        var errBack = function(e) {
+          alert('An error has occurred!'+e);
+        };
+        // Put video listeners into place
+        if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          //  alert('1');
+            navigator.mediaDevices.getUserMedia(mediaConfig).then(function(stream) {
+                video.src = window.URL.createObjectURL(stream);
+                video.play(); isWebcam = true;
+            }).catch(function(err) {
+                 alert("Error 2"+err);
+            });
+        }
+        /* Legacy code below! */
+        else if(navigator.getUserMedia) { // Standard
+            alert('2');
+            navigator.getUserMedia(mediaConfig, function(stream) {
+              video.src = stream;
+              video.play(); isWebcam = true;
+            }, errBack);
+          } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+            alert('3');
+            navigator.webkitGetUserMedia(mediaConfig, function(stream){
+              video.src = window.webkitURL.createObjectURL(stream);
+              video.play(); isWebcam = true;
+            }, errBack);
+          } else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
+            alert('4');
+            navigator.mozGetUserMedia(mediaConfig, function(stream){
+              video.src = window.URL.createObjectURL(stream);
+              video.play(); isWebcam = true;
+            }, errBack);
+          } else {
+            alert('Your browser not support web cam api');
+          }
+
+          setInterval(function(){
+                if(isWebcam) {
+                   context.drawImage(video, 0, 0, 480, 480);
+                   var imgData=context.getImageData(10,10,380,430);
+                  // alert(imgData.data.length);
+                   // hay 820800 / 4
+                   muestras = [];
+                   for (var i=0;i<imgData.data.length;i+=400)
+                     {
+                      let avg = (imgData.data[i] + imgData.data[i + 1] + imgData.data[i + 2]) / 3;
+                      muestras.push(""+parseInt(avg));
+                     }
+
+                    document.getElementById("pres").innerHTML = "Paragraph changed!  "+ muestras[1];
+                      if(muestras[1] != 0) {
+                        var max = Math.max.apply(this, muestras);
+                        var min = Math.min.apply(this, muestras);
+                        var diff = max - min;
+                    //  alert("Max: "+max+" Min: "+min+ " Difff: "+ diff);
+                        if (diff <= 75) {
+                          alert('HOLA  !!!!!!!!!!!!!!!!!!!!!'+ diff);
+                        }
+                    }
+                  }
+               }, 1500);
+
+         }, false);
+
+        </script>
+
+    </body>
+</html>
